@@ -5,10 +5,13 @@ const fields = document.querySelectorAll('[required]'); // select all elements w
 const fieldValidator = createFieldValidator();
 
 for (let field of fields) {
+    field.addEventListener('focus', event => moveLabelUp(event.target));
+
     field.addEventListener('invalid', event => {
         event.preventDefault(); // no more bubbles
         fieldValidator.performCustomValidation(event.target);
     });
+
     field.addEventListener('blur', event => {
         fieldValidator.performCustomValidation(event.target);
     });
@@ -41,13 +44,18 @@ function createFieldValidator() {
         const validationError = getFieldValidationError();
 
         if (validationError) {
-            field.style.borderColor = 'red';
             spanError.classList.add('active');
             spanError.innerText = getErrorMessage({ type: field.type, validationError });
+
+            field.style.borderColor = 'red';
+            if (validationError == 'valueMissing') {
+                moveLabelDown(field);
+            }
         } else {
-            field.style.borderColor = 'green';
             spanError.classList.remove('active');
             spanError.innerText = '';
+
+            field.style.borderColor = 'green';
         }
 
         function getFieldValidationError() {
@@ -60,4 +68,12 @@ function createFieldValidator() {
     }
 
     return { performCustomValidation };
+}
+
+function moveLabelUp(field) {
+    field.classList.add('label-up');
+}
+
+function moveLabelDown(field) {
+    field.classList.remove('label-up');
 }

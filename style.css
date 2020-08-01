@@ -95,8 +95,7 @@ input ~ label {
     transition: .4s;
 }
 
-input:focus ~ label,
-input:valid ~ label {
+input.label-up ~ label {
     transform: translateY(-20px);
     font-size: 0.8em;
     letter-spacing: 0.1em;
