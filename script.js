@@ -20,7 +20,7 @@ for (let field of fields) {
 
 function handleFormSubmission(event) {
     event.preventDefault();
-    console.log('Form submitted successfully!');
+    alert('Signed in successfully!');
 }
 
 function createFieldValidator() {
